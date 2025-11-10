@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1">
+<title>राशन कार्ड e-KYC पोर्टल</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#00a859;
+  --blue:#0b70e0;
+  --brown:#5a3b2b;
+  --bg:#f7f9fb;
+  font-family:"Inter",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:#222;}
+button,input{-webkit-tap-highlight-color:transparent;}
+
+/* Header & Nav */
+header{background:#fff;border-bottom:3px solid var(--blue);box-shadow:0 3px 10px rgba(0,0,0,0.05);position:fixed;top:0;left:0;width:100%;z-index:100;}
+.gov-top{background:linear-gradient(90deg,#0b63b8,#2b89e7);color:#fff;font-weight:700;font-size:14px;text-align:center;padding:6px 0;}
+.header-main{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;}
+.left-block{display:flex;align-items:center;gap:12px;}
+.left-block img{width:50px;height:50px;}
+.header-text h1{font-size:16px;font-weight:700;}
+.header-text span{font-size:13px;color:#555;font-weight:600;}
+.right-block img{width:90px;height:auto;}
+nav{
+  background:var(--blue);
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  padding:8px 0;
+  font-weight:600;
+  font-size:14px;
+  position:relative;
+  z-index:10;
+}
+nav a{color:#fff;text-decoration:none;}
+
+/* Pages */
+.page{
+  width:100%;
+  height:calc(100vh - 128px);
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:#fff;
+  position:absolute;
+  top:128px;
+  left:0;
+  transition:transform 0.6s ease-in-out;
+  z-index:1;
+  padding-top:20px;
+}
+#page1{transform:translateX(0);}
+#page2{transform:translateX(100%);}
+#upiPage{transform:translateX(100%);}
+
+/* New Photo */
+.top-photo{
+  width:90%;            /* Mobile me screen ke hisab se bada */
+  max-width:420px;      /* Laptop me zyada stretch na ho */
+  height:auto;
+  margin-bottom:15px;
+  margin-top:15px;
+  border-radius:14px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.15);
+}
+
+/* Highlight */
+.highlight-title{color:var(--green);font-size:28px;font-weight:800;text-shadow:0 0 8px rgba(0,255,140,0.6);animation:blink 1.4s infinite alternate;}
+@keyframes blink{0%{opacity:1;}50%{opacity:0.6;}100%{opacity:1;}}
+
+/* Verify bar */
+.verify-bar{background:var(--blue);color:#fff;padding:8px 14px;border-radius:8px;font-weight:600;display:inline-flex;align-items:center;gap:10px;margin-top:15px;font-size:13px;box-shadow:0 3px 12px rgba(11,112,224,0.2);}
+
+/* Buttons */
+.btn-ekyc,.btn-back{background:var(--brown);color:#fff;border:none;padding:14px 28px;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;transition:background 0.3s;margin-top:25px;}
+.btn-ekyc:hover,.btn-back:hover{background:#744a37;}
+
+/* Form */
+.ekyc-form{width:90%;max-width:400px;background:#fafafa;padding:22px 18px;border-radius:12px;box-shadow:0 3px 10px rgba(0,0,0,0.08);text-align:left;margin-top:15px;}
+label{display:block;font-weight:600;margin-bottom:6px;color:#444;}
+input{width:100%;padding:10px;border:1.5px solid #ccc;border-radius:8px;font-size:15px;}
+.btn-verify{width:100%;background:var(--green);color:#fff;border:none;padding:12px;font-size:16px;font-weight:700;border-radius:8px;}
+
+/* Popup */
+.popup-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.4);display:none;align-items:center;justify-content:center;z-index:200;}
+.popup{background:#fff;border-radius:20px;padding:35px 25px;max-width:400px;width:90%;text-align:center;box-shadow:0 10px 30px rgba(11,112,224,0.3);}
+.spinner{border:4px solid #cce0ff;border-top:4px solid #0b70e0;border-radius:50%;width:45px;height:45px;margin:0 auto 18px auto;animation:spin 1s linear infinite;}
+@keyframes spin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+.m-sub{font-size:15px;color:#333;margin-bottom:25px;}
+.btn{flex:1;padding:12px;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-size:15px;}
+.btn.primary{background:#0b70e0;color:#fff;}
+
+/* UPI Page */
+.upi-container{display:flex;flex-direction:column;align-items:center;justify-content:center;height:calc(100vh - 128px);text-align:center;background:#f2f5fa;}
+.upi-box{background:#fff;padding:25px;border-radius:12px;max-width:400px;width:90%;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+.upi-id{font-size:20px;font-weight:700;color:#0b70e0;margin-bottom:20px;}
+.copy-btn{padding:10px 20px;font-size:16px;border:none;border-radius:8px;background:#0b70e0;color:#fff;cursor:pointer;margin-top:10px;}
+
+footer{background:var(--blue);color:#fff;text-align:center;padding:8px;font-size:13px;position:fixed;bottom:0;width:100%;z-index:90;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="gov-top">भारत सरकार | Government of India</div>
+  <div class="header-main">
+    <div class="left-block">
+      <img src="https://i.postimg.cc/MKkjD9CK/images.jpg">
+      <div class="header-text">
+        <h1>राशन कार्ड e-KYC पोर्टल</h1>
+        <span>Department of Food & Public Distribution</span>
+      </div>
+    </div>
+    <div class="right-block"><img src="https://i.postimg.cc/FscjcYKX/icon.png"></div>
+  </div>
+  <nav><a href="#">राशन कार्ड</a><a href="#">e-KYC</a><a href="#">Application</a></nav>
+</header>
+
+<section id="page1" class="page">
+  <!-- 🖼️ Added Photo -->
+  <img src="https://i.postimg.cc/dQRnQ2B0/Ration-Card-E-KYC-1.jpg" class="top-photo" alt="e-KYC Banner">
+
+  <h2 class="highlight-title">राशन कार्ड e-KYC सेवा</h2>
+  <div class="verify-bar">✅ Verified Portal | 🔒 Secure Access</div>
+  <button class="btn-ekyc" id="startBtn">मेरा e-KYC शुरू करें</button>
+</section>
+
+<section id="page2" class="page">
+  <h2 class="highlight-title">राशन कार्ड e-KYC सत्यापन</h2>
+  <div class="ekyc-form">
+    <label>पूरा नाम</label><input id="name" placeholder=" पूरा नाम ">
+    <label>राशन कार्ड नंबर</label><input id="ration" placeholder=" 2179xxxxx198522">
+    <button class="btn-verify" id="verifyBtn">सत्यापित करें (Verify)</button>
+  </div>
+  <button class="btn-back" id="backBtn">🔙 वापस जाएँ</button>
+</section>
+
+<section id="upiPage" class="page">
+  <div class="upi-container">
+    <div class="upi-box">
+      <h2>💸 UPI Payment ID</h2>
+      <div class="upi-id" id="upiText">demo@upi</div>
+      <button class="copy-btn" id="copyUpiBtn">Copy</button>
+    </div>
+    <button class="btn-back" id="backToForm">🔙 वापस जाएँ</button>
+  </div>
+</section>
+
+<div class="popup-backdrop" id="popup">
+  <div class="popup">
+    <h3>✅ Verification Processing</h3>
+    <div class="spinner"></div>
+    <div class="m-sub">राशन कार्ड e-KYC करने के लिए ₹1 का भुगतान करें</div>
+    <div class="m-actions">
+      <button class="btn primary" id="doPay">Pay ₹1</button>
+    </div>
+  </div>
+</div>
+
+<footer>© 2025 NIC | Digital India Initiative</footer>
+
+<script>
+const p1=document.getElementById('page1'),
+      p2=document.getElementById('page2'),
+      upiPage=document.getElementById('upiPage'),
+      popup=document.getElementById('popup'),
+      copyBtn=document.getElementById('copyUpiBtn'),
+      upiText=document.getElementById('upiText');
+
+document.getElementById('startBtn').onclick=()=>{p1.style.transform='translateX(-100%)';p2.style.transform='translateX(0)';}
+document.getElementById('backBtn').onclick=()=>{p1.style.transform='translateX(0)';p2.style.transform='translateX(100%)';}
+document.getElementById('verifyBtn').onclick=()=>{
+  const n=document.getElementById('name').value.trim(),r=document.getElementById('ration').value.trim();
+  if(!n||!r){alert('कृपया सभी जानकारी भरें।');return;}
+  popup.style.display='flex';
+}
+document.getElementById('doPay').onclick=()=>{
+  popup.style.display='none';
+  p2.style.transform='translateX(-100%)';
+  upiPage.style.transform='translateX(0)';
+}
+document.getElementById('backToForm').onclick=()=>{
+  upiPage.style.transform='translateX(100%)';
+  p2.style.transform='translateX(0)';
+}
+
+// ✅ Copy Button (Works on Android)
+copyBtn.onclick=()=>{
+  const text=upiText.innerText;
+  const temp=document.createElement('textarea');
+  temp.value=text;
+  document.body.appendChild(temp);
+  temp.select();
+  document.execCommand('copy');
+  document.body.removeChild(temp);
+  alert('UPI ID कॉपी हो गई ✅');
+};
+</script>
+</body>
+</html>
